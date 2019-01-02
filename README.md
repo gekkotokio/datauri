@@ -15,6 +15,10 @@ func main() {
     }
 
     # print out Base64 encoded string.
-    fmt.Println encodedString
+    fmt.Println(encodedString)
 }
 ```
+
+## TODO
+- Add Decoder method
+- Add the function to indetify image format
