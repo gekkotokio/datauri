@@ -7,6 +7,31 @@ import (
 	"path/filepath"
 )
 
+// Decoder converts base64 string to an image file if it could be saved and decoded.
+// If error occures, it returns error.
+func Decoder(encode string, savePath string) error {
+	if err := writable(savePath); err != nil {
+		return err
+	}
+
+	rawDate, err := base64.StdEncoding.DecodeString(encode)
+
+	if err != nil {
+		return err
+	}
+
+	image, err := os.Create(savePath)
+	defer image.Close()
+
+	if err != nil {
+		return err
+	}
+
+	image.Write(rawDate)
+
+	return nil
+}
+
 // Encoder converts image files to Base64 string if successfully encoded.
 // If error occures, it returns error.
 func Encoder(imagePath string) (string, error) {
