@@ -30,11 +30,11 @@ func TestExsit(t *testing.T) {
 		"sample/appenginelogo.gif",
 		"sample/gophercolor16x16.png",
 	} {
-		if _, err := exsits(imgPath); err != nil {
+		if err := exsits(imgPath); err != nil {
 			t.Errorf("expected no errors but %s", err.Error())
 		}
 
-		if _, err := exsits(filepath.Join(wd, imgPath)); err != nil {
+		if err := exsits(filepath.Join(wd, imgPath)); err != nil {
 			t.Errorf("expected no errors but %s", err.Error())
 		}
 	}
@@ -44,11 +44,11 @@ func TestExsit(t *testing.T) {
 		"sample/appenginelogo1.gif",
 		"sample/gophercolor32x32.png",
 	} {
-		if _, err := exsits(wrongPath); err == nil {
+		if err := exsits(wrongPath); err == nil {
 			t.Errorf("expected errors but no errors: %s", wrongPath)
 		}
 
-		if _, err := exsits(filepath.Join(wd, wrongPath)); err == nil {
+		if err := exsits(filepath.Join(wd, wrongPath)); err == nil {
 			t.Errorf("expected errors but no errors: %s", wrongPath)
 		}
 	}

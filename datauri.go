@@ -10,13 +10,11 @@ import (
 // Encoder converts image files to Base64 string if successfully encoded.
 // If error occures, it returns error.
 func Encoder(imagePath string) (string, error) {
-	absPath, err := exsits(imagePath)
-
-	if err != nil {
+	if err := exsits(imagePath); err != nil {
 		return "", err
 	}
 
-	image, err := os.Open(absPath)
+	image, err := os.Open(imagePath)
 	defer image.Close()
 
 	info, err := image.Stat()
@@ -36,14 +34,14 @@ func Encoder(imagePath string) (string, error) {
 	return base64.StdEncoding.EncodeToString(rawData), nil
 }
 
-func exsits(imagePath string) (string, error) {
+func exsits(imagePath string) error {
 	absPath, _ := filepath.Abs(imagePath)
 
 	if _, err := os.Stat(absPath); os.IsNotExist(err) == true {
-		return "", fmt.Errorf("no such file or directory: %s", absPath)
+		return fmt.Errorf("no such file or directory: %s", absPath)
 	}
 
-	return absPath, nil
+	return nil
 }
 
 func writable(savePath string) error {
